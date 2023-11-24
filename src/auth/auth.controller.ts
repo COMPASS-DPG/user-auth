@@ -10,14 +10,15 @@ import { AuthGuard } from './auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post("/user/signIn")
+  @Post("/signIn/user")
   @ApiOperation({ summary: "login consumer by user email and password" })
   @ApiResponse({ status: HttpStatus.OK })
   async loginAsConsumer(@Body() createAuthDto: CreateAuthDto, @Res() res) {
     try {
-      const userToken = await this.authService.signInAsConsumer(
+      const userToken = await this.authService.signIn(
         createAuthDto.email,
-        createAuthDto.password
+        createAuthDto.password,
+        "CONSUMER"
       );
       return res.status(HttpStatus.OK).json({
         message: "login success",
@@ -30,14 +31,15 @@ export class AuthController {
     }
   }
 
-  @Post("/admin/signIn")
+  @Post("/signIn/admin")
   @ApiOperation({ summary: "login user by userId and password" })
   @ApiResponse({ status: HttpStatus.OK })
   async login(@Body() createAuthDto: CreateAuthDto, @Res() res) {
     try {
-      const userToken = await this.authService.signInAsAdmin(
+      const userToken = await this.authService.signIn(
         createAuthDto.email,
-        createAuthDto.password
+        createAuthDto.password,
+        "ADMIN"
       );
       return res.status(HttpStatus.OK).json({
         message: "login success",
