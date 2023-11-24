@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//Mock Database Models - To be removed after the app is integrated with User Service and FRAC Based Competency Tagger.
+model User {
+  id             String        @id @default(uuid())
+  email          String        @unique
+  role           UserRolesEnum
+  userName       String
+  password       String
+  profilePicture String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  designation    String
+  @@map("users")
+}
+
+model Designation {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+  Roles       Role[]
+}
+
+model Role {
+  id            Int                @id @default(autoincrement())
+  name          String             @unique
+  description   String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  competencies  RoleToCompetency[]
+  Designation   Designation?       @relation(fields: [designationId], references: [id])
+  designationId Int?
+
+  @@map("roles")
+}
+
+model Competency {
+  id               Int                           @id @default(autoincrement())
+  name             String                        @unique
+  description      String?
+  createdAt        DateTime                      @default(now())
+  updatedAt        DateTime                      @updatedAt
+  roles            RoleToCompetency[]
+  competencyLevels CompetencyToCompetencyLevel[]
+
+  @@map("competencies")
+}
+
+model RoleToCompetency {
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId       Int
+  competency   Competency @relation(fields: [competencyId], references: [id], onDelete: Cascade)
+  competencyId Int
+
+  @@id([roleId, competencyId])
+}
+
+model CompetencyLevel {
+  id           Int                           @id @default(autoincrement())
+  name         String                        @unique
+  description  String?
+  levelNumber  Int
+  // Level        Level                         @relation(fields: [levelNumber], references: [levelNumber])
+  createdAt    DateTime                      @default(now())
+  updatedAt    DateTime                      @updatedAt
+  competencies CompetencyToCompetencyLevel[]
+
+  @@map("competency_levels")
+}
+
+model CompetencyToCompetencyLevel {
+  competency        Competency      @relation(fields: [competencyId], references: [id], onDelete: Cascade)
+  competencyId      Int
+  competencyLevel   CompetencyLevel @relation(fields: [competencyLevelId], references: [id], onDelete: Cascade)
+  competencyLevelId Int
+
+  @@id([competencyId, competencyLevelId])
+}
+
+enum UserRolesEnum {
+  ADMIN
+  CONSUMER
+}
