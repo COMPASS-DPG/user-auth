@@ -14,7 +14,7 @@ datasource db {
 model User {
   id             String        @id @default(uuid())
   email          String        @unique
-  role           UserRolesEnum
+  role           UserRolesEnum[]
   userName       String
   password       String
   profilePicture String?

@@ -10,12 +10,12 @@ import { AuthGuard } from './auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post("/signIn")
-  @ApiOperation({ summary: "login user by userId and password" })
+  @Post("/user/signIn")
+  @ApiOperation({ summary: "login consumer by user email and password" })
   @ApiResponse({ status: HttpStatus.OK })
-  async login(@Body() createAuthDto: CreateAuthDto, @Res() res) {
+  async loginAsConsumer(@Body() createAuthDto: CreateAuthDto, @Res() res) {
     try {
-      const userToken = await this.authService.signIn(
+      const userToken = await this.authService.signInAsConsumer(
         createAuthDto.email,
         createAuthDto.password
       );
@@ -26,7 +26,27 @@ export class AuthController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: error.meta.cause });
+        .json({ message: error.message });
+    }
+  }
+
+  @Post("/admin/signIn")
+  @ApiOperation({ summary: "login user by userId and password" })
+  @ApiResponse({ status: HttpStatus.OK })
+  async login(@Body() createAuthDto: CreateAuthDto, @Res() res) {
+    try {
+      const userToken = await this.authService.signInAsAdmin(
+        createAuthDto.email,
+        createAuthDto.password
+      );
+      return res.status(HttpStatus.OK).json({
+        message: "login success",
+        userToken: userToken,
+      });
+    } catch (error) {
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: error.message });
     }
   }
 
