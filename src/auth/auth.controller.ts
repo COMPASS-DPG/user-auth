@@ -1,9 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, Res, UseGuards, Request } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from './auth.guard';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpStatus,
+  Res,
+  UseGuards,
+  Request,
+} from "@nestjs/common";
+import { AuthService } from "./auth.service";
+import { CreateAuthDto } from "./dto/create-auth.dto";
+import { UpdateAuthDto } from "./dto/update-auth.dto";
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
+import { AuthGuard } from "./auth.guard";
+import { UserRolesEnum } from "@prisma/client";
 
 @Controller("auth")
 @ApiTags("auth")
@@ -18,7 +36,7 @@ export class AuthController {
       const userToken = await this.authService.signIn(
         createAuthDto.email,
         createAuthDto.password,
-        "CONSUMER"
+        UserRolesEnum.CONSUMER
       );
       return res.status(HttpStatus.OK).json({
         message: "login success",
@@ -39,7 +57,7 @@ export class AuthController {
       const userToken = await this.authService.signIn(
         createAuthDto.email,
         createAuthDto.password,
-        "ADMIN"
+        UserRolesEnum.ADMIN
       );
       return res.status(HttpStatus.OK).json({
         message: "login success",
@@ -54,6 +72,7 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Get("profile")
+  @ApiBearerAuth("jwt")
   getProfile(@Request() req) {
     return req.user;
   }
