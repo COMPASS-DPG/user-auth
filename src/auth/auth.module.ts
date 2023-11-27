@@ -3,8 +3,7 @@ import { AuthService } from "./auth.service";
 import { AuthController } from "./auth.controller";
 import { PrismaModule } from "../prisma/prisma.module";
 import { JwtModule } from "@nestjs/jwt";
-import { MockUserModule } from "src/mockModules/mock-user/mock-user.module";
-import { jwtConstants } from "./constant";
+import { MockUserModule } from "../mockModules/mock-user/mock-user.module";
 
 @Module({
   imports: [
@@ -12,8 +11,8 @@ import { jwtConstants } from "./constant";
     MockUserModule,
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: "60s" },
+      secret: process.env.JWT_CONSTANT_SECRET,
+      signOptions: { expiresIn: "1d" },
     }),
   ],
   controllers: [AuthController],
