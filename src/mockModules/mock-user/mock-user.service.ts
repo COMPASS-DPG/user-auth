@@ -2,14 +2,29 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateMockUserDto } from "./dto/create-mock-user.dto";
 import { UpdateMockUserDto } from "./dto/update-mock-user.dto";
 import { PrismaService } from "../../prisma/prisma.service";
+import { AuthService } from "../../auth/auth.service";
 
 @Injectable()
 export class MockUserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private authService:AuthService
+  ) { }
 
   public async create(createMockUserDto: CreateMockUserDto) {
+    // Hashing the password
+    const hashedPassword = await this.authService.hashPassword(
+      createMockUserDto.password
+    );
     return await this.prisma.user.create({
-      data: createMockUserDto,
+      data: {
+        email: createMockUserDto.email,
+        role: createMockUserDto.role,
+        userName: createMockUserDto.userName,
+        password: hashedPassword,
+        profilePicture: createMockUserDto.profilePicture,
+        designation:createMockUserDto.designation
+      },
       select: {
         ...this.userSelectObj,
       },

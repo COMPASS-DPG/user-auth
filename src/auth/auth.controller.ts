@@ -34,8 +34,7 @@ export class AuthController {
   async loginAsConsumer(@Body() createAuthDto: CreateAuthDto, @Res() res) {
     try {
       const userToken = await this.authService.signIn(
-        createAuthDto.email,
-        createAuthDto.password,
+        createAuthDto,
         UserRolesEnum.CONSUMER
       );
       return res.status(HttpStatus.OK).json({
@@ -55,8 +54,7 @@ export class AuthController {
   async login(@Body() createAuthDto: CreateAuthDto, @Res() res) {
     try {
       const userToken = await this.authService.signIn(
-        createAuthDto.email,
-        createAuthDto.password,
+        createAuthDto,
         UserRolesEnum.ADMIN
       );
       return res.status(HttpStatus.OK).json({
