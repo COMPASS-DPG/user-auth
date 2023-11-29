@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Inject, Injectable, UnauthorizedException, forwardRef } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { MockUserService } from "../mockModules/mock-user/mock-user.service";
 import { UserRolesEnum } from "@prisma/client";
@@ -9,6 +9,7 @@ import { CreateAuthDto } from "./dto/create-auth.dto";
 export class AuthService {
   constructor(
     private jwtService: JwtService,
+    @Inject(forwardRef(()=>MockUserService))
     private userService: MockUserService
   ) {}
 

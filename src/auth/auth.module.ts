@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { AuthController } from "./auth.controller";
 import { PrismaModule } from "../prisma/prisma.module";
@@ -8,8 +8,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 @Module({
   imports: [
+    forwardRef(() => MockUserModule),
     PrismaModule,
-    MockUserModule,
     JwtModule.registerAsync({
       imports: [ConfigModule], // Import ConfigModule to access configuration values.
       useFactory: async (configService: ConfigService) => {

@@ -1,9 +1,14 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 import { MockUserService } from "./mock-user.service";
 import { MockUserController } from "./mock-user.controller";
-import { PrismaService } from "src/prisma/prisma.service";
+import { AuthModule } from "../../auth/auth.module";
+import { PrismaModule } from "../../prisma/prisma.module";
 
 @Module({
+  imports: [
+    forwardRef(() => AuthModule),
+    PrismaModule
+  ],
   controllers: [MockUserController],
   providers: [MockUserService],
   exports: [MockUserService],
