@@ -19,7 +19,7 @@ export class AuthService {
     // If not a valid user then thow an error
     if (!user) {
       // Handle the case when the user is not found.
-      throw new Error("User not found");
+      throw new UnauthorizedException("Invalid credentials.");
     }
     // Compare the entered password with the password fetched from database
     const isPasswordValid = await this.comparePasswords(
@@ -27,11 +27,11 @@ export class AuthService {
       createAuthDto.password
     );
     // Check password is valid or not
-    if (!isPasswordValid) throw new BadRequestException("Incorrect password");
+    if (!isPasswordValid) throw new UnauthorizedException("Invalid credentials.");
 
     // Check user is consumer or not otherwise throw an error
     if (!user.role.includes(role)) {
-      throw new ForbiddenException("Invalid user. Authentication failed.");
+      throw new UnauthorizedException("Invalid user. Authentication failed.");
     }
     const payload = {
       userName: user.userName,

@@ -4,7 +4,7 @@ export const CONSTANTS = {
 
 export const SWAGGER_CONSTANTS = {
   TITLE: "API",
-  DESCRIPTION: "WPCAS Survey Service API description",
+  DESCRIPTION: "User Auth Service API description",
   VERSION: "1.0",
   PATH: "api/docs",
   SWAGGER_AUTH_SECURITY_SCHEMA_API_KEY: "api-config-key",

@@ -3,6 +3,6 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AppService {
   getHealth(): string {
-    return "WPCAS survey service running successfully";
+    return "User Auth service running successfully";
   }
 }
