@@ -1,4 +1,4 @@
-import { UserRolesEnum } from "@prisma/client";
+import {  UserRolesEnum } from "@prisma/client";
 
 export const users = [
   {
@@ -13,6 +13,7 @@ export const users = [
     id: "4d45a9e9-4a4d-4c92-aaea-7b5abbd6ff98", // Unique UUID for Neha Patil
     email: "neha.patil@example.com",
     role: [UserRolesEnum.CONSUMER],
+    profilePicture: "https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.webp?b=1&s=170667a&w=0&k=20&c=YQ_j83pg9fB-HWOd1Qur3_kBmG_ot_hZty8pvoFkr6A=",
     userName: "Neha Patil",
     password: "P@ssw0rd2",
     designation: "Software Engineer",
@@ -21,6 +22,7 @@ export const users = [
     id: "abaa7220-5d2e-4e05-842a-95b2c4ce1876", // Unique UUID for Rajesh Kumar
     email: "rajesh.kumar@example.com",
     role: [UserRolesEnum.CONSUMER],
+    profilePicture: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     userName: "Rajesh Kumar",
     password: "P@ssw0rd3",
     designation: "Software Engineer",
@@ -29,6 +31,7 @@ export const users = [
     id: "0f5d0b13-8d72-46c9-a7c4-c1f7e5aa1f17", // Unique UUID for Priya Jain
     email: "priya.jain@example.com",
     role: [UserRolesEnum.CONSUMER],
+    profilePicture: "https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.webp?b=1&s=170667a&w=0&k=20&c=YQ_j83pg9fB-HWOd1Qur3_kBmG_ot_hZty8pvoFkr6A=",
     userName: "Priya Jain",
     password: "P@ssw0rd4",
     designation: "QA Engineer",
@@ -37,6 +40,7 @@ export const users = [
     id: "bbf1f7cf-4216-458e-8d98-0d9204ae57ef", // Unique UUID for Arjun Singh
     email: "arjun.singh@example.com",
     role: [UserRolesEnum.CONSUMER],
+    profilePicture: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     userName: "Arjun Singh",
     password: "P@ssw0rd5",
     designation: "QA Engineer",
