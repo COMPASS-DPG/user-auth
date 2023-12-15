@@ -1,10 +1,10 @@
 NODE_ENV=development
-APP_NAME="WPCAS Survey API"
+APP_NAME="mock service for user API"
 API_PREFIX=api
-APP_PORT=4010
+APP_PORT=4023
 
 DATABASE_USERNAME=postgres
 DATABASE_PASSWORD=secret
 DATABASE_NAME=service-db
 DATABASE_PORT=5432
-DATABASE_URL="postgresql://postgres:secret@postgres:5432/service-db?sslmode=prefer"
+DATABASE_URL="postgresql://postgres:secret@postgres:5432/user-db?sslmode=prefer"

@@ -23,12 +23,13 @@ RUN npm install
 
 # Copy the rest of the application code to the container
 COPY . .
+COPY env-example ./.env
 
 # Build your Nest.js application
 RUN npm run build
 
 # Expose the PORT environment variable (default to 4000 if not provided)
-ARG PORT=4000
+ARG PORT=4023
 ENV PORT=$PORT
 EXPOSE $PORT
 
