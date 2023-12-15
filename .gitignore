@@ -5,6 +5,8 @@ node_modules
 # enviornment variables
 .env
 
+# prisma
+prisma/migrations
 
 # Logs
 logs
